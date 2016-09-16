@@ -33,7 +33,8 @@ public class ClimbingControls : MonoBehaviour {
         float ydiff = anchor.position.y - lastY;
         lastY = anchor.position.y;
 
-        this.transform.Translate(0, -ydiff, 0);
+        if (ydiff < 0)
+            this.transform.Translate(0, -ydiff, 0);
 	}
 
     void SetAnchor()
