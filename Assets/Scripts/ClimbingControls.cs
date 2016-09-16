@@ -11,6 +11,8 @@ public class ClimbingControls : MonoBehaviour {
     public Transform rightHand;
     public bool reset = false;
 
+    public Rotating rotatingScript;
+
     private Animator anim;
     private Transform anchor = null;
     private int lastDirection = 0; // 1 is right, -1 is left, 0 is no direction
@@ -39,7 +41,9 @@ public class ClimbingControls : MonoBehaviour {
 
     void SetAnchor()
     {
-        float h = Input.GetAxis("Horizontal");
+        //float h = Input.GetAxis("Horizontal"); //old tastatur
+        float h = rotatingScript.getNumber();
+
         anim.SetFloat("Climb", h);
 
         // set new anchor when
