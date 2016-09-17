@@ -10,6 +10,7 @@ public class ClimbingControls : MonoBehaviour {
     public Transform leftHand;
     public Transform rightHand;
     public bool reset = false;
+    public float movementSpeed = 2f;
 
     public Rotating rotatingScript;
 
@@ -18,6 +19,7 @@ public class ClimbingControls : MonoBehaviour {
     private float rotationZ = 0f;
 
     private float lastY = 0;
+    private float rotation = 0;
 
 	void Awake()
     {
@@ -33,17 +35,16 @@ public class ClimbingControls : MonoBehaviour {
 	void Update () {
         // Retrieve Gyro Value
         rotationZ += -Input.gyro.rotationRateUnbiased.z;
-        float rot = -rotationZ / 50f;
+        rotation = -rotationZ / 50f;
 
-        SetAnchor(rot);
+        SetAnchor(rotation);
 
         Movement();
 	}
 
     void SetAnchor(float h)
     {
-        //float h = Input.GetAxis("Horizontal"); //old tastatur
-        //float h = rotatingScript.getNumber();
+        h = Input.GetAxis("Horizontal"); //old tastatur
 
         anim.SetFloat("Climb", h);
 
@@ -82,6 +83,6 @@ public class ClimbingControls : MonoBehaviour {
         lastY = anchor.position.y;
 
         if (ydiff < 0)
-            this.transform.Translate(0, -ydiff, 0);
+            this.transform.Translate(0, -ydiff * movementSpeed * Time.deltaTime, 0);
     }
 }
