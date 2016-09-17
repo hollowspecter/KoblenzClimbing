@@ -4,6 +4,7 @@ using System.Collections;
 
 public class ClimbingControls : MonoBehaviour {
 
+    public bool rootMotion = false;
     public Text debugText;
     public Text anchorText;
     public float threshold = 0.4f;
@@ -39,7 +40,8 @@ public class ClimbingControls : MonoBehaviour {
 
         SetAnchor(rotation);
 
-        Movement();
+        if (!rootMotion)
+            Movement();
 	}
 
     void SetAnchor(float h)
@@ -47,6 +49,9 @@ public class ClimbingControls : MonoBehaviour {
         h = Input.GetAxis("Horizontal"); //old tastatur
 
         anim.SetFloat("Climb", h);
+
+        if (rootMotion)
+            return;
 
         // set new anchor when
         // RIGHT
