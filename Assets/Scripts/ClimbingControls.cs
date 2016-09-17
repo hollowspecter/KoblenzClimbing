@@ -15,7 +15,7 @@ public class ClimbingControls : MonoBehaviour {
 
     private Animator anim;
     private Transform anchor = null;
-    private int lastDirection = 0; // 1 is right, -1 is left, 0 is no direction
+    private float rotationZ = 0f;
 
     private float lastY = 0;
 
@@ -24,25 +24,26 @@ public class ClimbingControls : MonoBehaviour {
         anim = GetComponent<Animator>();
     }
 
+    void Start()
+    {
+        // Turn on Gyro
+        Input.gyro.enabled = true;
+    }
+
 	void Update () {
+        // Retrieve Gyro Value
+        rotationZ += -Input.gyro.rotationRateUnbiased.z;
+        float rot = -rotationZ / 50f;
 
-        SetAnchor();
+        SetAnchor(rot);
 
-        // Move according to Anchor
-        if (anchor == null)
-            return;
-
-        float ydiff = anchor.position.y - lastY;
-        lastY = anchor.position.y;
-
-        if (ydiff < 0)
-            this.transform.Translate(0, -ydiff, 0);
+        Movement();
 	}
 
-    void SetAnchor()
+    void SetAnchor(float h)
     {
         //float h = Input.GetAxis("Horizontal"); //old tastatur
-        float h = rotatingScript.getNumber();
+        //float h = rotatingScript.getNumber();
 
         anim.SetFloat("Climb", h);
 
@@ -53,7 +54,6 @@ public class ClimbingControls : MonoBehaviour {
             debugText.text = "Right";
             anchor = rightHand;
             anchorText.text = "Right is Anchored";
-            lastDirection = 1;
             lastY = anchor.position.y;
         }
         // LEFT
@@ -62,7 +62,6 @@ public class ClimbingControls : MonoBehaviour {
             debugText.text = "Left";
             anchorText.text = "Left is Anchored";
             anchor = leftHand;
-            lastDirection = -1;
             lastY = anchor.position.y;
         }
         else
@@ -71,5 +70,18 @@ public class ClimbingControls : MonoBehaviour {
         }
 
         if (reset && h == 0) anchor = null;
+    }
+
+    void Movement()
+    {
+        // Move according to Anchor
+        if (anchor == null)
+            return;
+
+        float ydiff = anchor.position.y - lastY;
+        lastY = anchor.position.y;
+
+        if (ydiff < 0)
+            this.transform.Translate(0, -ydiff, 0);
     }
 }
