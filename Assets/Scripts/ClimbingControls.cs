@@ -43,7 +43,7 @@ public class ClimbingControls : MonoBehaviour {
     void SetAnchor(float h)
     {
         //float h = Input.GetAxis("Horizontal"); //old tastatur
-        //float h = rotatingScript.getNumber();
+        //h = rotatingScript.getNumber();
 
         anim.SetFloat("Climb", h);
 
@@ -83,5 +83,11 @@ public class ClimbingControls : MonoBehaviour {
 
         if (ydiff < 0)
             this.transform.Translate(0, -ydiff, 0);
+
+    }
+
+    public void reset_z()
+    {
+        rotationZ = 0;
     }
 }
