@@ -15,11 +15,13 @@ public class ClimbingRoot : MonoBehaviour {
     }
 
 	void Start () {
+
         // Turn on Gyro
         Input.gyro.enabled = true;
 	}
 	
 	void Update () {
+
         // Retrieve Gyro Value
         if (!useKeys)
         {
@@ -33,7 +35,6 @@ public class ClimbingRoot : MonoBehaviour {
         anim.SetFloat("Climb", rotation);
 	}
 
-    // Call this function to recalibrate the gyro
     public void ResetRotation()
     {
         rotationZ = 0;

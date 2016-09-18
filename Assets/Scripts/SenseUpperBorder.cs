@@ -4,12 +4,16 @@ using System.Collections;
 public class SenseUpperBorder : MonoBehaviour {
 
     public Transform upperBorder;
+    public float lengthUpAnim = 3f;
 
     private Animator anim;
     private Transform sensor;
 
     private bool reachedBorder = false;
     private bool sensorFound = true;
+    private bool pullingUp = false;
+
+    private float timer = 0f;
 
     void Awake()
     {
@@ -32,6 +36,17 @@ public class SenseUpperBorder : MonoBehaviour {
             print("You've reached the upper border");
             reachedBorder = true;
             anim.SetTrigger("Up");
+        }
+
+        if (reachedBorder && !pullingUp)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= lengthUpAnim)
+            {
+                anim.SetTrigger("Flag");
+                pullingUp = true;
+            }
         }
 	}
 }
