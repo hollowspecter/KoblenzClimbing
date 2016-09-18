@@ -10,15 +10,18 @@ public class Rotating : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Input.gyro.enabled = true;
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        xRotation += -Input.gyro.rotationRateUnbiased.x;
-        yRotation += -Input.gyro.rotationRateUnbiased.y;
+        //xRotation += -Input.gyro.rotationRateUnbiased.x;
+        //yRotation += -Input.gyro.rotationRateUnbiased.y;
+
         zRotation += -Input.gyro.rotationRateUnbiased.z;
 
         transform.eulerAngles = new Vector3(0, 0, zRotation);
+
+       // MoveCharacter();
     }
 
     public void reset_angle()
@@ -31,5 +34,17 @@ public class Rotating : MonoBehaviour {
         return -zRotation / 50f;
     }
 
+    //public void MoveCharacter()
+    //{
+    //    if (Swipe.Instance.IsSwiping(SwipeDirection.Left))
+    //    {
+    //        transform.position = new Vector3(transform.position.x + 10, transform.position.y, transform.position.z);
+    //    }
+    //    if (Swipe.Instance.IsSwiping(SwipeDirection.Right))
+    //    {
+    //        transform.position = new Vector3(transform.position.x - 10, transform.position.y, transform.position.z);
+    //    }
+
+    //}
 }
 

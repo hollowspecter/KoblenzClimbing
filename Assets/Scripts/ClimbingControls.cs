@@ -86,8 +86,9 @@ public class ClimbingControls : MonoBehaviour {
 
     }
 
-    public void reset_z()
+    public void Reset_z()
     {
         rotationZ = 0;
     }
+
 }
