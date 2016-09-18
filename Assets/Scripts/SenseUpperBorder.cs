@@ -9,17 +9,27 @@ public class SenseUpperBorder : MonoBehaviour {
     private Transform sensor;
 
     private bool reachedBorder = false;
+    private bool sensorFound = true;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
         sensor = transform.FindChild("senseUpperBorder");
+
+        if (sensor == null)
+        {
+            print("There is no sensor found!");
+            sensorFound = false;
+        }
     }
 	
 	void Update () {
+        if (!sensorFound)
+            return;
+
 	    if (sensor.position.y >= upperBorder.position.y && !reachedBorder)
         {
-            Debug.Log("You've reached the upper border");
+            print("You've reached the upper border");
             reachedBorder = true;
             anim.SetTrigger("Up");
         }
